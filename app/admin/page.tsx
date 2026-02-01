@@ -8,7 +8,6 @@ import { getCurrentUser } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { redirect } from 'next/navigation';
 import { GlowCard, CardHeader, CardTitle, CardContent } from '@/components/ui/GlowCard';
-import { formatCurrency } from '@/lib/utils';
 import Link from 'next/link';
 
 // =============================================================================

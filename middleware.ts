@@ -21,20 +21,6 @@ const PROTECTED_ROUTES = [
     '/admin',
 ];
 
-/**
- * Admin-only routes
- */
-const ADMIN_ROUTES = ['/admin'];
-
-/**
- * Admin email addresses
- */
-const ADMIN_EMAILS = (
-    process.env.ADMIN_EMAILS ?? 'danielpedroribeirodasilva@gmail.com'
-)
-    .split(',')
-    .map((email) => email.trim().toLowerCase());
-
 // =============================================================================
 // MIDDLEWARE
 // =============================================================================

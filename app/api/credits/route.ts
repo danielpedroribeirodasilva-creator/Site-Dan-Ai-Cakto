@@ -4,8 +4,26 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { getCurrentUser, addCredits, checkIsAdmin } from '@/lib/auth';
+import { getCurrentUser, addCredits } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
+
+// =============================================================================
+// HELPERS
+// =============================================================================
+
+const ADMIN_EMAILS = (
+    process.env.ADMIN_EMAILS ?? 'danielpedroribeirodasilva@gmail.com'
+)
+    .split(',')
+    .map((email) => email.trim().toLowerCase());
+
+function checkIsAdmin(email: string, role: string): boolean {
+    return role === 'ADMIN' || ADMIN_EMAILS.includes(email.toLowerCase());
+}
+
+function formatCredits(credits: number, isAdmin: boolean): string {
+    return isAdmin ? '∞' : credits.toFixed(2);
+}
 
 // =============================================================================
 // ROUTE HANDLERS
@@ -33,7 +51,7 @@ export async function GET(request: NextRequest) {
         // Get current balance
         const balance = {
             credits: user.credits,
-            displayCredits: user.displayCredits,
+            displayCredits: formatCredits(user.credits, user.isAdmin),
             isAdmin: user.isAdmin,
         };
 
@@ -136,11 +154,11 @@ export async function POST(request: NextRequest) {
         }
 
         // Add credits
-        const updatedUser = await addCredits(
+        const result = await addCredits(
             userId,
             amount,
-            type,
-            description ?? `Credit ${type.toLowerCase()}`
+            description ?? `Credit ${type.toLowerCase()}`,
+            type
         );
 
         // Log admin action
@@ -157,10 +175,10 @@ export async function POST(request: NextRequest) {
         }
 
         return NextResponse.json({
-            success: true,
+            success: result.success,
             data: {
-                userId: updatedUser.id,
-                newBalance: updatedUser.credits,
+                userId,
+                newBalance: result.total,
             },
         });
     } catch (error) {
@@ -228,7 +246,7 @@ export async function PATCH(request: NextRequest) {
         const newBalance = Math.max(0, targetUser.credits + amount);
 
         const updatedUser = await prisma.$transaction(async (tx) => {
-            const user = await tx.user.update({
+            const updated = await tx.user.update({
                 where: { id: userId },
                 data: { credits: newBalance },
             });
@@ -243,7 +261,7 @@ export async function PATCH(request: NextRequest) {
                 },
             });
 
-            return user;
+            return updated;
         });
 
         // Log admin action
