@@ -256,7 +256,7 @@ export default async function AdminPage() {
                                         <div className="flex-1 min-w-0">
                                             <p className="text-sm text-white truncate">{log.action}</p>
                                             <p className="text-xs text-gray-500">
-                                                {log.user.email} • {new Date(log.createdAt).toLocaleString('pt-BR')}
+                                                {log.user?.email ?? 'Sistema'} • {new Date(log.createdAt).toLocaleString('pt-BR')}
                                             </p>
                                         </div>
                                     </div>
