@@ -91,12 +91,14 @@ function StatCard({
     subValue?: string;
     color?: 'neon' | 'blue' | 'purple' | 'yellow';
 }) {
-    const colors = {
-        neon: 'text-neon-400 bg-neon-500/10',
-        blue: 'text-blue-400 bg-blue-500/10',
-        purple: 'text-purple-400 bg-purple-500/10',
-        yellow: 'text-yellow-400 bg-yellow-500/10',
-    };
+    const colorStyles = {
+        neon: { text: 'text-neon-400', bg: 'bg-neon-500/10' },
+        blue: { text: 'text-blue-400', bg: 'bg-blue-500/10' },
+        purple: { text: 'text-purple-400', bg: 'bg-purple-500/10' },
+        yellow: { text: 'text-yellow-400', bg: 'bg-yellow-500/10' },
+    } as const;
+
+    const styles = colorStyles[color];
 
     return (
         <GlowCard variant="default" padding="default" hover="lift">
@@ -105,11 +107,11 @@ function StatCard({
                     <p className="text-sm text-gray-400 mb-1">{label}</p>
                     <p className="text-3xl font-bold text-white">{value}</p>
                     {subValue && (
-                        <p className={`text-xs mt-1 ${colors[color].split(' ')[0]}`}>{subValue}</p>
+                        <p className={`text-xs mt-1 ${styles.text}`}>{subValue}</p>
                     )}
                 </div>
-                <div className={`p-3 rounded-xl ${colors[color].split(' ')[1]}`}>
-                    <Icon className={`w-6 h-6 ${colors[color].split(' ')[0]}`} />
+                <div className={`p-3 rounded-xl ${styles.bg}`}>
+                    <Icon className={`w-6 h-6 ${styles.text}`} />
                 </div>
             </div>
         </GlowCard>
