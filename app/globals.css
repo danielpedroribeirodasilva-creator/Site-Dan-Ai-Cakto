@@ -1,0 +1,423 @@
+/**
+ * Global Styles
+ * Base Tailwind imports and custom CSS variables
+ */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =============================================================================
+   CSS CUSTOM PROPERTIES
+   ============================================================================= */
+
+@layer base {
+  :root {
+    /* Background and foreground */
+    --background: 0 0% 0%;
+    --foreground: 0 0% 98%;
+
+    /* Card and popover */
+    --card: 0 0% 4%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 4%;
+    --popover-foreground: 0 0% 98%;
+
+    /* Primary (Neon Green) */
+    --primary: 156 100% 50%;
+    --primary-foreground: 0 0% 0%;
+
+    /* Secondary */
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 0 0% 98%;
+
+    /* Muted */
+    --muted: 0 0% 12%;
+    --muted-foreground: 0 0% 64%;
+
+    /* Accent */
+    --accent: 156 100% 40%;
+    --accent-foreground: 0 0% 0%;
+
+    /* Destructive (Error Red) */
+    --destructive: 348 100% 50%;
+    --destructive-foreground: 0 0% 98%;
+
+    /* Border and input */
+    --border: 0 0% 15%;
+    --input: 0 0% 15%;
+    --ring: 156 100% 50%;
+
+    /* Radius */
+    --radius: 0.75rem;
+
+    /* Neon glow colors */
+    --neon-primary: #00ff9d;
+    --neon-glow: 0 0 10px rgba(0, 255, 157, 0.5), 0 0 20px rgba(0, 255, 157, 0.3), 0 0 30px rgba(0, 255, 157, 0.2);
+    --neon-glow-strong: 0 0 20px rgba(0, 255, 157, 0.8), 0 0 40px rgba(0, 255, 157, 0.6), 0 0 60px rgba(0, 255, 157, 0.4);
+  }
+
+  /* Dark mode is default, but define for completeness */
+  .dark {
+    --background: 0 0% 0%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 4%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 4%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 156 100% 50%;
+    --primary-foreground: 0 0% 0%;
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 12%;
+    --muted-foreground: 0 0% 64%;
+    --accent: 156 100% 40%;
+    --accent-foreground: 0 0% 0%;
+    --destructive: 348 100% 50%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 15%;
+    --input: 0 0% 15%;
+    --ring: 156 100% 50%;
+  }
+
+  /* Light mode (if needed in future) */
+  .light {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 4%;
+    --card: 0 0% 96%;
+    --card-foreground: 0 0% 4%;
+    --popover: 0 0% 96%;
+    --popover-foreground: 0 0% 4%;
+    --primary: 156 100% 35%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 92%;
+    --secondary-foreground: 0 0% 4%;
+    --muted: 0 0% 92%;
+    --muted-foreground: 0 0% 45%;
+    --accent: 156 100% 30%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 348 85% 45%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 85%;
+    --input: 0 0% 85%;
+    --ring: 156 100% 35%;
+  }
+}
+
+/* =============================================================================
+   BASE STYLES
+   ============================================================================= */
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    @apply scroll-smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  /* Scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-white/10 rounded-full;
+    transition: background-color 0.2s;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-white/20;
+  }
+
+  /* Firefox scrollbar */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+  }
+
+  /* Selection styling */
+  ::selection {
+    @apply bg-neon-500/30 text-white;
+  }
+
+  /* Focus outline */
+  *:focus-visible {
+    @apply outline-none ring-2 ring-neon-400 ring-offset-2 ring-offset-background;
+  }
+
+  /* Reduced motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* =============================================================================
+   COMPONENT STYLES
+   ============================================================================= */
+
+@layer components {
+  /* Neon text glow */
+  .text-neon-glow {
+    text-shadow: var(--neon-glow);
+  }
+
+  .text-neon-glow-strong {
+    text-shadow: var(--neon-glow-strong);
+  }
+
+  /* Glass morphism */
+  .glass {
+    @apply bg-black/40 backdrop-blur-xl border border-white/10;
+  }
+
+  .glass-strong {
+    @apply bg-black/60 backdrop-blur-2xl border border-white/15;
+  }
+
+  .glass-card {
+    @apply glass rounded-2xl p-6 shadow-glass;
+  }
+
+  /* Neon border */
+  .border-neon {
+    @apply border border-neon-400/50;
+    box-shadow: 0 0 10px rgba(0, 255, 157, 0.2), inset 0 0 10px rgba(0, 255, 157, 0.05);
+  }
+
+  .border-neon-strong {
+    @apply border border-neon-400;
+    box-shadow: 0 0 20px rgba(0, 255, 157, 0.4), inset 0 0 20px rgba(0, 255, 157, 0.1);
+  }
+
+  /* Gradient backgrounds */
+  .bg-gradient-dark {
+    @apply bg-gradient-to-br from-black via-abyss-900 to-black;
+  }
+
+  .bg-gradient-neon {
+    @apply bg-gradient-to-r from-neon-500 via-neon-400 to-neon-500;
+  }
+
+  .bg-gradient-neon-subtle {
+    @apply bg-gradient-to-br from-neon-950/50 via-black to-neon-950/30;
+  }
+
+  /* Button variants */
+  .btn-neon {
+    @apply relative overflow-hidden px-6 py-3 rounded-xl font-semibold text-black;
+    @apply bg-gradient-to-r from-neon-500 to-neon-400;
+    @apply transition-all duration-300 ease-out;
+    @apply hover:shadow-neon-md hover:scale-105;
+    @apply active:scale-95;
+    @apply disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100;
+  }
+
+  .btn-neon::before {
+    content: '';
+    @apply absolute inset-0 opacity-0 transition-opacity duration-300;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  }
+
+  .btn-neon:hover::before {
+    @apply opacity-100;
+    animation: shimmer 0.6s ease-out;
+  }
+
+  .btn-ghost-neon {
+    @apply px-6 py-3 rounded-xl font-semibold;
+    @apply border border-neon-500/30 text-neon-400;
+    @apply transition-all duration-300;
+    @apply hover:bg-neon-500/10 hover:border-neon-500/50;
+    @apply active:scale-95;
+  }
+
+  /* Card hover effect */
+  .card-hover {
+    @apply transition-all duration-300 ease-out;
+    @apply hover:-translate-y-1 hover:shadow-neon-sm;
+  }
+
+  /* Skeleton loading */
+  .skeleton {
+    @apply animate-pulse bg-white/5 rounded;
+  }
+
+  .skeleton-text {
+    @apply skeleton h-4 w-full;
+  }
+
+  .skeleton-title {
+    @apply skeleton h-6 w-3/4;
+  }
+
+  /* Typing indicator dots */
+  .typing-dot {
+    @apply w-2 h-2 rounded-full bg-neon-400;
+    animation: typing-bounce 1.4s infinite ease-in-out both;
+  }
+
+  .typing-dot:nth-child(1) {
+    animation-delay: -0.32s;
+  }
+
+  .typing-dot:nth-child(2) {
+    animation-delay: -0.16s;
+  }
+
+  .typing-dot:nth-child(3) {
+    animation-delay: 0s;
+  }
+}
+
+/* =============================================================================
+   UTILITY CLASSES
+   ============================================================================= */
+
+@layer utilities {
+  /* Hide scrollbar */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Text gradient */
+  .text-gradient-neon {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-neon-400 via-neon-500 to-neon-400;
+  }
+
+  /* Animation delays */
+  .animation-delay-100 {
+    animation-delay: 100ms;
+  }
+
+  .animation-delay-200 {
+    animation-delay: 200ms;
+  }
+
+  .animation-delay-300 {
+    animation-delay: 300ms;
+  }
+
+  .animation-delay-500 {
+    animation-delay: 500ms;
+  }
+
+  /* Perspective for 3D transforms */
+  .perspective-500 {
+    perspective: 500px;
+  }
+
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+
+  .perspective-2000 {
+    perspective: 2000px;
+  }
+
+  /* Preserve 3D */
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+
+  /* Backface visibility */
+  .backface-hidden {
+    backface-visibility: hidden;
+  }
+}
+
+/* =============================================================================
+   KEYFRAME ANIMATIONS
+   ============================================================================= */
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes typing-bounce {
+  0%,
+  80%,
+  100% {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse-neon {
+  0%,
+  100% {
+    box-shadow: 0 0 10px rgba(0, 255, 157, 0.5), 0 0 20px rgba(0, 255, 157, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(0, 255, 157, 0.8), 0 0 40px rgba(0, 255, 157, 0.5), 0 0 60px rgba(0, 255, 157, 0.3);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes glow {
+  0%,
+  100% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(1.3);
+  }
+}
+
+/* =============================================================================
+   PRINT STYLES
+   ============================================================================= */
+
+@media print {
+  body {
+    @apply bg-white text-black;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+}
