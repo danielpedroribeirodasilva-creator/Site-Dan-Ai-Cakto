@@ -3,7 +3,7 @@
  * Dashboard for super admins with stats and management tools
  */
 
-import { Shield, Users, CreditCard, BarChart3, FileText, TrendingUp, AlertTriangle } from 'lucide-react';
+import { Shield, Users, CreditCard, BarChart3, FileText, TrendingUp, AlertTriangle, type LucideIcon } from 'lucide-react';
 import { getCurrentUser } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { redirect } from 'next/navigation';
@@ -85,7 +85,7 @@ function StatCard({
     subValue,
     color = 'neon',
 }: {
-    icon: React.ElementType;
+    icon: LucideIcon;
     label: string;
     value: string | number;
     subValue?: string;
