@@ -100,9 +100,7 @@ export async function POST(request: NextRequest) {
         await deductCredits(
             user.id,
             creditCost,
-            'Chat message',
-            conversation.id,
-            'conversation'
+            `Chat message in conversation ${conversation.id}`
         );
 
         // Get conversation history for context
