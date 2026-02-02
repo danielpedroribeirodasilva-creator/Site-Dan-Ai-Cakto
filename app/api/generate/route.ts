@@ -96,9 +96,7 @@ export async function POST(request: NextRequest) {
         await deductCredits(
             user.id,
             result.estimatedCost,
-            `Site generation: ${projectName}`,
-            project.id,
-            'project'
+            `Site generation: ${projectName} (${project.id})`
         );
 
         return NextResponse.json({
