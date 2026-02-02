@@ -219,7 +219,7 @@ export default async function AdminPage() {
                                 >
                                     <div>
                                         <p className="text-sm text-white">
-                                            {tx.user.name ?? tx.user.email}
+                                            {tx.user?.name ?? tx.user?.email ?? 'Usuário'}
                                         </p>
                                         <p className="text-xs text-gray-500">{tx.description}</p>
                                     </div>
